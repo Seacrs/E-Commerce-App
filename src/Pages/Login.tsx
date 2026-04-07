@@ -2,13 +2,20 @@ import { useEffect } from "react";
 import { 
     Form,
     useActionData,
+    useLoaderData,
     type ActionFunctionArgs,
+    useNavigation,
     redirect,
 
 } from 'react-router-dom'
+import clsx from 'clsx';
 import { loginUser } from '../api.ts'
 import type { LoginResponse } from "../api.ts";
 import { useUser } from '../Hook/useUser.ts'
+
+export function loader({ request}: ActionFunctionArgs){
+    return new URL(request.url).searchParams.get("message");
+}
 
 
 export async function action({ request } : ActionFunctionArgs){
@@ -23,6 +30,8 @@ export async function action({ request } : ActionFunctionArgs){
 
 export default function App() {
     const actionData = useActionData<LoginResponse>()
+    const message = useLoaderData<string>()
+    const navigation = useNavigation();
     const { addUser } = useUser();
 
     useEffect(() => {
@@ -37,18 +46,25 @@ export default function App() {
         }
     },[actionData])
 
+    const isSubmitting = navigation.state === "submitting"
+    const styles = clsx(isSubmitting ? "px-5 py-2 bg-gray-200 rounded-2xl self-end mt-5 mr-20 cursor-not-allowed opacity-60": "px-5 py-2 bg-green-200 rounded-2xl self-end mt-5 mr-20")
+
     return (
         <div className="grid grid-cols-2 gap-5 justify-center m-32 p-20 bg-gray-100 rounded-xl ">
             <div className='flex flex-col gap-5'>
                 <h1 className="text-3xl font-bold">Sign in to your account</h1>
+                {message && <h3 className="text-red-400 text-xl">{message}</h3>}
                 {actionData?.error && <h3 className="text-red-400 text-xl">{actionData.error}</h3>}
             </div>
             
             <Form method='post' replace className="flex flex-col gap-4">
                 <input className='w-sm px-5  py-3 pl-5 bg-white placeholder-gray-600 rounded-lg' name='email' type="email" placeholder='Enter your Email'  />
                 <input className='w-sm px-5 mt-4 py-3 pl-5 bg-white placeholder-gray-600 rounded-lg' name='password' type="password" placeholder='Enter your Password'/>
-                <button className="px-5 py-2 bg-amber-200 rounded-2xl self-end mt-5 mr-20">
-                    Log in
+                <button disabled={navigation.state === "submitting"} className={styles}>
+                    {isSubmitting
+                    ? "Logging in..."
+                    : "Log in"
+                    }
                 </button>
             </Form>
         </div>
