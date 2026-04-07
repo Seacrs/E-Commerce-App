@@ -5,7 +5,7 @@ import {
     useLoaderData,
     type ActionFunctionArgs,
     useNavigation,
-    redirect,
+    useNavigate,
 
 } from 'react-router-dom'
 import clsx from 'clsx';
@@ -32,13 +32,14 @@ export default function App() {
     const actionData = useActionData<LoginResponse>()
     const message = useLoaderData<string>()
     const navigation = useNavigation();
+    const navigate = useNavigate()
     const { addUser } = useUser();
 
     useEffect(() => {
         if(actionData?.foundUser){
             try{
                 addUser(actionData.foundUser.name);
-                console.log("User added to context and localStorage");
+                navigate("/categories", { replace: true })
             }
             catch (err){
                 console.error("Failed to save user")

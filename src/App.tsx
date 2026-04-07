@@ -6,14 +6,17 @@ import {
 } from "react-router-dom"
 
 import Login, { action as loginAction, loader as loginLoader } from './Pages/Login.tsx'
+import Categories, { loader as categoriesLoader } from './Pages/Categories.tsx'
 import NotFound from './Pages/NotFound.tsx'
 import Error from './Components/Error.tsx'
+
+// localStorage.clear();
 
 export default function App(){
   const router = createBrowserRouter(createRoutesFromElements(
     <Route path='/' errorElement={<Error/>}>
       <Route index element={<Login />} loader={loginLoader} action={loginAction}/>
-      
+      <Route path="categories" element={<Categories/>} loader={categoriesLoader}/>
       <Route path="*" element={<NotFound />}/>
     </Route>
   ))
