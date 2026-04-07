@@ -7,13 +7,13 @@ import {
 
 import Login, { action as loginAction } from './Pages/Login.tsx'
 
-const router = createBrowserRouter(createRoutesFromElements(
-  <Route path='/'>
-    <Route index element={<Login />} action={loginAction}/>
-  </Route>
-))
-
 export default function App(){
+  const router = createBrowserRouter(createRoutesFromElements(
+    <Route path='/'>
+      <Route index element={<Login />} action={loginAction}/>
+    </Route>
+  ))
+
   return (
     <RouterProvider router = {router} />
   )
