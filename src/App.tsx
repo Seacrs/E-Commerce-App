@@ -7,6 +7,7 @@ import {
 
 import Login, { action as loginAction, loader as loginLoader } from './Pages/Login.tsx'
 import Categories, { loader as categoriesLoader } from './Pages/Categories.tsx'
+import CategoryDetail, { loader as categoryLoader } from "./Pages/CategoryDetail.tsx"
 import NotFound from './Pages/NotFound.tsx'
 import Error from './Components/Error.tsx'
 
@@ -17,6 +18,7 @@ export default function App(){
     <Route path='/' errorElement={<Error/>}>
       <Route index element={<Login />} loader={loginLoader} action={loginAction}/>
       <Route path="categories" element={<Categories/>} loader={categoriesLoader}/>
+      <Route path="categories/:id/:name" element={<CategoryDetail />} loader={categoryLoader}/>
       <Route path="*" element={<NotFound />}/>
     </Route>
   ))

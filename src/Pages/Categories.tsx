@@ -21,7 +21,7 @@ export default function Categories(){
         const categories = loaderData.categories.map(category => (
             <Link
                 key={category.id}
-                to={`${category.id}`}
+                to={`${category.id}/${category.name}`}
                 className='decoration-0 unset'
             >
                 <div className='w-3xs flex flex-col items-center bg-white mb-4 p-5 pl-6'>

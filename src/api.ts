@@ -22,6 +22,18 @@ export interface categories {
     updatedAt: string;
 }
 
+export interface Product {
+    id: number;
+    title: string;
+    slug: string;
+    price: number;
+    description: string;
+    category: categories;
+    images: string[];
+    creationAt: string;
+    updatedAt: string;
+}
+
 export interface LoginResponse {
     foundUser: users | null;
     error: string | null;
@@ -29,6 +41,16 @@ export interface LoginResponse {
 
 export interface CategoryResponse {
     categories: categories[] | null;
+    error: string | null;
+}
+
+export interface ProductsResponse {
+    products: Product[] | null;
+    error: string | null;
+}
+
+export interface ProductResponse {
+    product: Product | null;
     error: string | null;
 }
 
@@ -92,5 +114,46 @@ export async function getCategories():Promise<CategoryResponse>{
             return {categories: null, error: err.message}
         }
         return {categories: null, error: "Something went wrong"};
+    }
+}
+
+export async function getProducts(id: string):Promise<ProductsResponse>{
+    try{
+        const res = await fetch("https://api.escuelajs.co/api/v1/products");
+        if(!res.ok){
+            throw new Error("Failed to fetch Products");
+        }
+        const data: Product[] = await res.json()
+        const filteredProducts = data.filter(product => product.category.id === Number(id));
+
+        return {
+            products: filteredProducts,
+            error: null
+        }
+    } catch (error) {
+        if(error instanceof Error){
+            return {products: null, error: error.message}
+        }
+        return {products: null, error: "Something went wrong"}
+    }
+}
+
+export async function getProduct(id: string):Promise<ProductResponse>{
+    try{
+        const res = await fetch(`https://api.escuelajs.co/api/v1/products/${id}`);
+        if(!res.ok){
+            throw new Error("Failed to fetch Product")
+        }
+        const data: Product = await res.json()
+
+        return {
+            product: data,
+            error: null
+        }
+    } catch (error){
+        if(error instanceof Error){
+            return {product: null, error: error.message}
+        }
+        return {product: null, error: "Something went wrong"}
     }
 }
