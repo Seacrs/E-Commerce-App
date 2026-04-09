@@ -30,9 +30,8 @@ export default function CategoryDetail(){
                 className='decoration-0 unset'
             >
                 <div className='w-3xs flex flex-col item-start bg-white mb-4 p-5 pl-6'>
-                    <img src={product.images[0]} alt={`Photo of ${product.title}`} />
-                    <p className=' text-xl text-gray-800 mt-4'>${product.price}</p>
-                    <p className='text-xl text-gray-800 mt-2'>{product.title}</p>
+                    <img src={product.images[0]} alt={`Photo of ${product.title}`}  className='rounded-3xl'/>                    
+                    <p className='text-xl text-gray-900 mt-2'>{product.title}</p>
                 </div>
             </Link>
         ))

@@ -1,5 +1,5 @@
 import { use } from "react";
-import { UserContext } from '../context';
+import { UserContext } from '../index';
 
 
 const useUser = () => {

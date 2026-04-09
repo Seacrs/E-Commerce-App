@@ -5,9 +5,8 @@ import {
   Route,
 } from "react-router-dom"
 
-import { requireAuth } from "./util.ts"
-
 import Login, { action as loginAction, loader as loginLoader } from './Pages/Login.tsx'
+import Layout from './Components/Layout.tsx'
 import Categories, { loader as categoriesLoader } from './Pages/Categories.tsx'
 import CategoryDetail, { loader as categoryLoader } from "./Pages/CategoryDetail.tsx"
 import Product, { loader as ProductLoader } from "./Pages/Product/Product.tsx"
@@ -18,7 +17,7 @@ import Error from './Components/Error.tsx'
 
 export default function App(){
   const router = createBrowserRouter(createRoutesFromElements(
-    <Route path='/' errorElement={<Error/>}>
+    <Route path='/' element={<Layout />} errorElement={<Error/>}>
       <Route index element={<Login />} loader={loginLoader} action={loginAction} errorElement={<Error/>}/>
       <Route path="categories" element={<Categories/>} loader={categoriesLoader} errorElement={<Error/>}/>
       <Route path="categories/:id/:name" element={<CategoryDetail />} loader={categoryLoader} errorElement={<Error/>}/>

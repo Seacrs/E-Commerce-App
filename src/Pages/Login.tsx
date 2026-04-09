@@ -11,7 +11,7 @@ import {
 import clsx from 'clsx';
 import { loginUser } from '../api.ts'
 import type { LoginResponse } from "../api.ts";
-import { useUser } from '../Hook/useUser.ts'
+import { useUser } from '../context/Hook/useUser.ts'
 
 export function loader({ request}: ActionFunctionArgs){
     return new URL(request.url).searchParams.get("message");
@@ -38,7 +38,10 @@ export default function App() {
     useEffect(() => {
         if(actionData?.foundUser){
             try{
-                addUser(actionData.foundUser.name);
+                addUser({
+                    name: actionData.foundUser.name,
+                    avatar: actionData.foundUser.avatar
+                });
                 navigate("/categories", { replace: true })
             }
             catch (err){

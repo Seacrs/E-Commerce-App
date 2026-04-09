@@ -1,16 +1,19 @@
 import { useState } from 'react'
-import { UserContext } from '../context/index.ts'
+import { UserContext, type User } from '../index.ts'
 
 interface UserProviderProps {
     children: React.ReactNode;
 }
 
 const userProvider = ({children}: UserProviderProps) => {
-    const [user, setUser] = useState<string | null>(null);
+    const [user, setUser] = useState<User |null>(()=>{
+        const stored = localStorage.getItem("user");
+        return stored ? JSON.parse(stored) : null;
+    });
 
-    const addUser = (user: string) => {
+    const addUser = (user: User) => {
         if(!user) return;
-        localStorage.setItem("user", user)
+        localStorage.setItem("user", (JSON.stringify(user)))
         setUser(user);
     }
 

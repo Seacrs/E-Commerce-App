@@ -25,8 +25,8 @@ export default function Categories(){
                 className='decoration-0 unset'
             >
                 <div className='w-3xs flex flex-col items-center bg-white mb-4 p-5 pl-6'>
-                    <img src={category.image} alt={`Photo of ${category.name}`} />
-                    <p className='text-xl text-gray-300'>{category.name}</p>
+                    <img src={category.image} alt={`Photo of ${category.name}`}  className='rounded-3xl'/>
+                    <p className='text-xl text-gray-800 mt-4'>{category.name}</p>
                 </div>
             </Link>
         ))
