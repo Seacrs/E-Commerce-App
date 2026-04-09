@@ -1,24 +1,23 @@
-import { useLoaderData, Link, useNavigation } from 'react-router-dom'
+import { useLoaderData, Link, Await } from 'react-router-dom'
+import { Suspense } from 'react';
 import { requireAuth } from "../util";
 import { getCategories } from '../api'
 import type { CategoryResponse } from '../api'
 
 export async function loader(){
     await requireAuth();
-    const data = await getCategories();
-    return data;
+    return {
+        categories: getCategories()
+    }
 }
 
 export default function Categories(){
-    const loaderData = useLoaderData<CategoryResponse>();
-    const navigation = useNavigation();
+    const { categories } = useLoaderData<{ categories: Promise<CategoryResponse>}>();
 
-    const isLoading = navigation.state === "submitting"
+    function renderCategories(data: CategoryResponse){
+        if(data.error || !data.categories) return;
 
-    function renderCategories(loaderData: CategoryResponse){
-        if(loaderData.error || !loaderData.categories) return;
-
-        const categories = loaderData.categories.map(category => (
+        const categories = data.categories.map(category => (
             <Link
                 key={category.id}
                 to={`${category.id}/${category.name}`}
@@ -41,9 +40,13 @@ export default function Categories(){
     return (
         <div className='m-6 p-6'>
             <h1 className='text-3xl font-bold'> Categories</h1>
-            { isLoading && <p>Loading Categories...</p> }
-            {loaderData.error && <h3 className="text-red-400 text-xl">{loaderData.error}</h3>}
-            {!loaderData.error && loaderData.categories &&renderCategories(loaderData)}
+            <Suspense fallback={<h3 className='text-xl text-gray-800 mt-10'>Loading...</h3>}>
+                <Await
+                resolve={categories}
+                >
+                    {renderCategories}
+                </Await>
+            </Suspense>
         </div>
     )
 }
