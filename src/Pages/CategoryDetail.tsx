@@ -26,7 +26,7 @@ export default function CategoryDetail(){
         const products = data.products.map(product => (
             <Link
                 key={product.id}
-                to={`${product.id}`}
+                to={`/products/${product.id}`}
                 className='decoration-0 unset'
             >
                 <div className='w-3xs flex flex-col item-start bg-white mb-4 p-5 pl-6'>
