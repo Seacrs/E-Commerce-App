@@ -1,10 +1,14 @@
 import { useNavigate, NavLink } from "react-router-dom"
 import clsx from 'clsx'
 import { useUser } from '../context/Hook/useUser'
+import { useTheme } from '../context/Hook/useTheme'
+import moon from '../assets/moon.svg'
+import sun from '../assets/sun.svg'
 
 export default function Navbar(){
     const navigate = useNavigate();
     const { user, removeUser } = useUser();
+    const { theme, toggleTheme } = useTheme();
 
     function logOut(){
         localStorage.clear();
@@ -34,6 +38,10 @@ export default function Navbar(){
                         <div className="self-center">
                             {user && <img src={user.avatar} alt="" className="rounded-full w-10 h-10 object-cover"/>}
                         </div>
+                        <div className="self-stretch w-px bg-gray-400" />
+                        <button onClick={toggleTheme}>
+                            <img src={theme ? sun : moon} alt="" className="w-6"/>
+                        </button>
                     </nav>
                 </div>
             </div>

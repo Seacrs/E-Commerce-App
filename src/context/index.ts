@@ -10,6 +10,12 @@ export interface UserContextType{
     removeUser: () => void;
 }
 
-const UserContext = createContext<UserContextType | null>(null);
+export interface ThemeContextType{
+    theme: boolean;
+    toggleTheme: () => void;
+}
 
-export { UserContext }
+const UserContext = createContext<UserContextType | null>(null);
+const ThemeContext = createContext<ThemeContextType | null>(null);
+
+export { UserContext, ThemeContext }
