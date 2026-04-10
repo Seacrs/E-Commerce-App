@@ -40,7 +40,7 @@ export default function Categories(){
     return (
         <div className='m-6 p-6'>
             <h1 className='text-3xl font-bold'> Categories</h1>
-            <Suspense fallback={<h3 className='text-xl text-gray-800 mt-10'>Loading...</h3>}>
+            <Suspense fallback={<h3 className='text-xl text-gray-800 mt-10 p-6'>Loading...</h3>}>
                 <Await
                 resolve={categories}
                 >

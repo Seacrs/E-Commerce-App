@@ -9,11 +9,9 @@ import Login, { action as loginAction, loader as loginLoader } from './Pages/Log
 import Layout from './Components/Layout.tsx'
 import Categories, { loader as categoriesLoader } from './Pages/Categories.tsx'
 import CategoryDetail, { loader as categoryLoader } from "./Pages/CategoryDetail.tsx"
-import Product, { loader as ProductLoader } from "./Pages/Product/Product.tsx"
+import Product, { loader as ProductLoader } from "./Pages/Product.tsx"
 import NotFound from './Pages/NotFound.tsx'
 import Error from './Components/Error.tsx'
-
-// localStorage.clear();
 
 export default function App(){
   const router = createBrowserRouter(createRoutesFromElements(

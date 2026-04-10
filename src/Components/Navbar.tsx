@@ -20,7 +20,7 @@ export default function Navbar(){
         <div className="bg-green-100">
             <div className="p-4 flex items-center justify-between px-10">
                 <div className="justify-self-start pl-10">
-                    <p className="text-2xl font-bold text-center">{ !user ? "E-commerce App" : `hi, ${user.name}` }</p>
+                    <p className="text-2xl font-bold text-center">{ !user ? "my Shop" : `hi, ${user.name}` }</p>
                 </div>
                 <div className="">
                     <nav className="flex gap-3 justify-center">

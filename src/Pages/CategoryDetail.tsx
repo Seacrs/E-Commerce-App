@@ -1,27 +1,39 @@
-import { useLoaderData, type LoaderFunctionArgs, Link } from 'react-router-dom'
+import { useLoaderData, type LoaderFunctionArgs, Link, Await } from 'react-router-dom'
 import { requireAuth } from '../util'
 import { getProducts, type ProductsResponse } from '../api'
+import { Suspense } from 'react';
 
-interface loaderResponse {
-    name: string;
-    data: ProductsResponse;
-}
 export async function loader({ params }: LoaderFunctionArgs){
     await requireAuth();
     const { id , name } = params;
     if(!id){
         throw new Response("Category ID is required", { status: 400 });
     }
-    const data = await getProducts(id)
 
-    return {name, data}
+    return {
+        name,
+        data: getProducts(id)
+    }
 }
 
 export default function CategoryDetail(){
-    const {name, data } = useLoaderData<loaderResponse>();
+    const {name, data } = useLoaderData<{
+        name: string;
+        data: Promise<ProductsResponse>
+    }>();
 
     const renderProducts = (data: ProductsResponse) => {
-        if(data.error || !data.products) return;
+        if(data.error){
+            return (
+                <p className="text-red-400 text-xl p-6">{data.error}</p>
+            )
+        }
+
+        if(!data.products || data.products.length === 0){
+            return (
+                <p className="text-gray-500 mt-4 p-6">No products found</p>
+            )
+        }
 
         const products = data.products.map(product => (
             <Link
@@ -29,7 +41,7 @@ export default function CategoryDetail(){
                 to={`/products/${product.id}`}
                 className='decoration-0 unset'
             >
-                <div className='w-3xs flex flex-col item-start bg-white mb-4 p-5 pl-6'>
+                <div className='w-3xs flex flex-col items-start bg-white mb-4 p-5 pl-6'>
                     <img src={product.images[0]} alt={`Photo of ${product.title}`}  className='rounded-3xl'/>                    
                     <p className='text-xl text-gray-900 mt-2'>{product.title}</p>
                 </div>
@@ -44,10 +56,14 @@ export default function CategoryDetail(){
     }
 
     return (
-        <div className='p-6 flex gap-5 flex-wrap overflow-hidden'>
+        <div className='m-6 p-6'>
             <h1 className="text-3xl font-bold">{name}</h1>
-            {data.error && <h3 className="text-red-400 text-xl">{data.error}</h3>}
-            {!data.error && data.products && renderProducts(data)}
+            <Suspense fallback={<h3 className='text-xl text-gray-800 mt-10 p-6'>Loading...</h3>}>
+                <Await
+                resolve={ data }>
+                    {renderProducts}
+                </Await>
+            </Suspense>
         </div>
     )
 }
