@@ -31,7 +31,7 @@ export default function CategoryDetail(){
 
         if(!data.products || data.products.length === 0){
             return (
-                <p className="text-gray-500 mt-4 p-6">No products found</p>
+                <p className="text-gray-500 dark:text-white mt-4 p-6">No products found</p>
             )
         }
 
@@ -41,9 +41,9 @@ export default function CategoryDetail(){
                 to={`/products/${product.id}`}
                 className='decoration-0 unset'
             >
-                <div className='w-3xs flex flex-col items-start bg-white mb-4 p-5 pl-6'>
+                <div className='w-3xs flex flex-col items-start  mb-4 p-5 pl-6'>
                     <img src={product.images[0]} alt={`Photo of ${product.title}`}  className='rounded-3xl'/>                    
-                    <p className='text-xl text-gray-900 mt-2'>{product.title}</p>
+                    <p className='text-xl text-gray-900 dark:text-white mt-2'>{product.title}</p>
                 </div>
             </Link>
         ))
@@ -57,8 +57,8 @@ export default function CategoryDetail(){
 
     return (
         <div className='m-6 p-6'>
-            <h1 className="text-3xl font-bold">{name}</h1>
-            <Suspense fallback={<h3 className='text-xl text-gray-800 mt-10 p-6'>Loading...</h3>}>
+            <h1 className="text-3xl font-bold dark:text-white">{name}</h1>
+            <Suspense fallback={<h3 className='text-xl text-gray-800 dark:text-white mt-10 p-6'>Loading...</h3>}>
                 <Await
                 resolve={ data }>
                     {renderProducts}

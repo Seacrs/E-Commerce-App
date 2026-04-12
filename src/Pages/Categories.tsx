@@ -23,9 +23,9 @@ export default function Categories(){
                 to={`${category.id}/${category.name}`}
                 className='decoration-0 unset'
             >
-                <div className='w-3xs flex flex-col items-center bg-white mb-4 p-5 pl-6'>
+                <div className='w-3xs flex flex-col items-center mb-4 p-5 pl-6'>
                     <img src={category.image} alt={`Photo of ${category.name}`}  className='rounded-3xl'/>
-                    <p className='text-xl text-gray-800 mt-4'>{category.name}</p>
+                    <p className='text-xl text-gray-800 mt-4 dark:text-white'>{category.name}</p>
                 </div>
             </Link>
         ))
@@ -39,8 +39,8 @@ export default function Categories(){
 
     return (
         <div className='m-6 p-6'>
-            <h1 className='text-3xl font-bold'> Categories</h1>
-            <Suspense fallback={<h3 className='text-xl text-gray-800 mt-10 p-6'>Loading...</h3>}>
+            <h1 className='text-3xl font-bold dark:text-white'> Categories</h1>
+            <Suspense fallback={<h3 className='text-xl text-gray-800 dark:text-white mt-10 p-6'>Loading...</h3>}>
                 <Await
                 resolve={categories}
                 >

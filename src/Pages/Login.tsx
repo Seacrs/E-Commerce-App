@@ -51,19 +51,23 @@ export default function App() {
     },[actionData])
 
     const isSubmitting = navigation.state === "submitting"
-    const styles = clsx(isSubmitting ? "px-5 py-2 bg-gray-200 rounded-2xl self-end mt-5 mr-20 cursor-not-allowed opacity-60": "px-5 py-2 bg-green-200 rounded-2xl self-end mt-5 mr-20")
+    const styles = clsx(isSubmitting ? "px-5 py-2 bg-gray-200 rounded-2xl self-end mt-5 mr-20 cursor-not-allowed opacity-60": "px-5 py-2 bg-green-200 dark:bg-blue-300 rounded-2xl self-end mt-5 mr-20")
 
     return (
-        <div className="grid grid-cols-2 gap-5 justify-center m-32 p-20 bg-gray-100 rounded-xl ">
+        <div className="grid grid-cols-2 gap-5 justify-center m-32 p-20 bg-white dark:bg-[#131314] rounded-xl ">
             <div className='flex flex-col gap-5'>
-                <h1 className="text-3xl font-bold">Sign in to your account</h1>
+                <h1 className="text-3xl font-bold dark:text-white">Sign in to your account</h1>
                 {message && <h3 className="text-red-400 text-xl">{message}</h3>}
                 {actionData?.error && <h3 className="text-red-400 text-xl">{actionData.error}</h3>}
             </div>
             
-            <Form method='post' replace className="flex flex-col gap-4">
-                <input className='w-sm px-5  py-3 pl-5 bg-white placeholder-gray-600 rounded-lg' name='email' type="email" placeholder='Enter your Email'  />
-                <input className='w-sm px-5 mt-4 py-3 pl-5 bg-white placeholder-gray-600 rounded-lg' name='password' type="password" placeholder='Enter your Password'/>
+            <Form
+                method='post'
+                replace 
+                className="flex flex-col gap-4"
+            >
+                <input className='w-sm px-5  py-3 pl-5 border-2 border-gray-300 focus:border-blue-500 focus:outline-none dark:border-1 dark:border-gray-700 bg-white dark:bg-[#131314] placeholder-gray-600 dark:placeholder-gray-300 dark:text-white rounded-lg' name='email' type="email" placeholder='Enter your Email'  />
+                <input className='w-sm px-5 mt-4 py-3 pl-5 border-2 border-gray-300 focus:border-blue-500 focus:outline-none dark:border-1 dark:border-gray-700 bg-white dark:bg-[#131314] placeholder-gray-600 dark:placeholder-gray-300 dark:text-white rounded-lg' name='password' type="password" placeholder='Enter your Password'/>
                 <button disabled={navigation.state === "submitting"} className={styles}>
                     {isSubmitting
                     ? "Logging in..."

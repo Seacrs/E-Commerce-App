@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ThemeContext } from "../index";
 
 export interface ThemeProviderProps{
@@ -6,11 +6,19 @@ export interface ThemeProviderProps{
 }
 
 const ThemeProvider = ({ children }: ThemeProviderProps) => {
-    const [theme, setTheme] = useState<boolean>(false);
+    const [theme, setTheme] = useState<boolean>(()=>{
+        return localStorage.getItem("dark") === "true";
+    });
 
-    const toggleTheme = () => {
-        setTheme(prev => !prev)
-    }
+    useEffect(() => {
+        document.documentElement.classList.toggle('dark', theme);
+        document.body.classList.toggle('dark', theme);
+        localStorage.setItem("dark", String(theme))
+    }, [theme]);
+
+    const toggleTheme = () => setTheme(prev =>{
+        return !prev
+    })
 
     return (
         <ThemeContext value={{theme, toggleTheme}}>
