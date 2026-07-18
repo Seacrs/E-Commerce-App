@@ -8,7 +8,7 @@ export default function Error() {
       return `${error.status} - ${error.statusText}`;
     }
     if (error instanceof Error) {
-      return error.message;
+      return (error as Error).message;
     }
     if (typeof error === "string") {
       return error;
